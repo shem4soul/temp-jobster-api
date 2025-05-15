@@ -147,12 +147,10 @@ const defaultStats = {
         count: { $sum: 1 } }
     },
     { $sort: { '_id.year': -1, '_id.months': -1 } },
-  
+    { $limit: 6 },
   ])  
   console.log(monthlyApplications);
-  
 
-  console.log(stats);
     res
   .status(StatusCodes.OK)
   .json({defaultStats, monthlyApplications: []})
