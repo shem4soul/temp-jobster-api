@@ -125,10 +125,24 @@ const showStats = async (req, res) => {
         count: { $sum: 1 } }
     },
   ])  
+
+stats = stats.reduce((acc, curr) => {
+  const { _id: title, count } = curr    
+  acc[title] = count
+  return acc    
+}
+, {})
+
+const defaultStats = {
+  pending: stats.pending || 0,    
+  interview: stats.interview || 0,
+  declined: stats.declined || 0,
+}
+
   console.log(stats);
     res
   .status(StatusCodes.OK)
-  .json({defaultStats: {}, monthlyApplications: []})
+  .json({defaultStats, monthlyApplications: []})
 }
     
  
