@@ -139,6 +139,19 @@ const defaultStats = {
   declined: stats.declined || 0,
 }
 
+  let monthlyApplications = await Job.aggregate([
+    { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
+    {
+      $group: {
+        _id: {year: {$year: '$createdAt'}, months:{$month: '$createdAt'}},
+        count: { $sum: 1 } }
+    },
+    { $sort: { '_id.year': -1, '_id.months': -1 } },
+  
+  ])  
+  console.log(monthlyApplications);
+  
+
   console.log(stats);
     res
   .status(StatusCodes.OK)
