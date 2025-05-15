@@ -149,11 +149,22 @@ const defaultStats = {
     { $sort: { '_id.year': -1, '_id.months': -1 } },
     { $limit: 6 },
   ])  
-  console.log(monthlyApplications);
+
+monthlyApplications = monthlyApplications.map((item) => {
+  const {
+    _id: { year, months },
+    count,
+  } = item  
+  const date = moment()
+    .month(months - 1)
+    .year(year)
+    .format('MMM YYYY')     
+  return { date, count }
+} )
 
     res
   .status(StatusCodes.OK)
-  .json({defaultStats, monthlyApplications: []})
+  .json({defaultStats, monthlyApplications })
 }
     
  
