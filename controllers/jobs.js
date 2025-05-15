@@ -161,6 +161,9 @@ monthlyApplications = monthlyApplications.map((item) => {
     .format('MMM YYYY')     
   return { date, count }
 } )
+  .reverse()
+
+  
 
     res
   .status(StatusCodes.OK)
